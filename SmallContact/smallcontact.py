@@ -1,8 +1,6 @@
 # Small contact app with the time tracker and session history
 
 import pickle
-import json
-from threading import local
 import time
 from MAZIbox import *
 
@@ -202,7 +200,7 @@ def new_contact():
     try:
         contacts.append(new_contact)
     except Exception as e:
-        print("Contact failed,", e, "so try to load file.")
+        print("Contact failed,", e, "so try to load file.\nPlease try it again.")
         where_is_my_save()
 
 
