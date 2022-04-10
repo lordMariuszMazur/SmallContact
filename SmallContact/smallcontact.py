@@ -341,7 +341,7 @@ def my_contacts(contacts):
 
 def where_is_my_save():
     """
-    Trys to locate the file previously saved.
+    Locates the file previously saved.
     Loads the contacts list from the given file
     if file not found, crates a new contacts list.
     """
