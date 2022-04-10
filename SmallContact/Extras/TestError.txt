@@ -1,0 +1,20 @@
+ERROR: test_Contact_init (__main__.TestContact)
+----------------------------------------------------------------------
+
+class TestContact(unittest.TestCase):
+    def test_Contact_init(self):
+        test_1 = Contact(name="Mario", address="Sydney", telephone=999)
+        self.assertEqual(test_1.__name, "Mario")
+        self.assertEqual(test_1.__address, "Sydney")
+        self.assertEqual(test_1.__telephone, 999) # error (?)
+
+Traceback (most recent call last):
+  File "c:\Users\inzmm\Desktop\SmallContact\run_tests.py", line 11, in test_Contact_init
+  File "c:\Users\inzmm\Desktop\SmallContact\smallcontact.py", line 117, in __init__
+    self.telephone = telephone
+  File "c:\Users\inzmm\Desktop\SmallContact\smallcontact.py", line 102, in telephone
+    if not Contact.validate_text(telephone):
+  File "c:\Users\inzmm\Desktop\SmallContact\smallcontact.py", line 71, in validate_text
+    if len(text) < Contact.__min_text_length:
+TypeError: object of type 'int' has no len()
+# change int to str.
