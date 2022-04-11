@@ -1,4 +1,5 @@
 # The module containing the basic and most needed functions.
+import os
 
 
 def mazi_text(prompt):
@@ -100,6 +101,17 @@ def mazi_int_ranged(prompt, min_value, max_value):
             continue
         break
     return result
+
+
+def wait_for_key():
+    input("Press Enter to continue...")
+
+
+def clear_screen():
+    """
+    Clears screen
+    """
+    os.system("clear" if os.name == "posix" else "cls")
 
 
 def introduction():

@@ -338,6 +338,8 @@ def my_contacts(contacts):
     except NameError as e:
         print("Contact have been not found,", e, ".")
 
+    wait_for_key()
+
 
 def where_is_my_save():
     """
@@ -371,6 +373,7 @@ file_name = "smacontacts.pickle"
 # load_contacts(file_name)
 
 while True:
+    clear_screen()
     command = mazi_int_ranged(prompt=menu, min_value=1, max_value=8)
     if command == 1:
         new_contact()
