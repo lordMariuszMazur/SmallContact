@@ -370,7 +370,6 @@ file_name = "smacontacts.pickle"
 
 # load_contacts(file_name)
 
-
 while True:
     command = mazi_int_ranged(prompt=menu, min_value=1, max_value=8)
     if command == 1:
