@@ -4,6 +4,9 @@ import pickle
 import time
 from MAZIbox import *
 
+DB_FILE = "smacontacts.pickle"
+
+
 # Create the session class
 class Session:
 
@@ -181,7 +184,7 @@ Sessions:
         self.__sessions.append(session_record)
 
 
-def new_contact():
+def new_contact(contacts):
     """
     Reads in a new contact and stores it.
     """
@@ -204,7 +207,7 @@ def new_contact():
         where_is_my_save()
 
 
-def find_contact(search_name):
+def find_contact(contacts, search_name):
     """
     Finds the contact with the matching name.
     Returns a contact instance or None if there is
@@ -230,7 +233,7 @@ def find_contact(search_name):
     return None
 
 
-def display_contact():
+def display_contact(contacts):
     """
     Reads in a name to search for and then displays
     the content information for that name or
@@ -238,15 +241,17 @@ def display_contact():
     """
     print("Find contact")
     search_name = mazi_text("Enter name: ")
-    contact = find_contact(search_name)
+    contact = find_contact(contacts, search_name)
     if contact != None:
         # We found a contact
         print(contact)
     else:
         print("This name was not found.")
 
+    wait_for_key()
 
-def edit_contact():
+
+def edit_contact(contacts):
     """
     Reads in a name to search for and then allows
     the user to edit the details of that contact.
@@ -255,7 +260,7 @@ def edit_contact():
     """
     print("Edit contact")
     search_name = mazi_text("Enter name: ")
-    contact = find_contact(search_name)
+    contact = find_contact(contacts, search_name)
     if contact != None:
         # We found a contact
         try:
@@ -274,15 +279,17 @@ def edit_contact():
     else:
         print("This name was not found. Please check the name again.")
 
+    wait_for_key()
 
-def add_session_to_contact():
+
+def add_session_to_contact(contacts):
     """
     Reads in a name to search for and then allows
     the user to add a session hours for that contact.
     """
     print("Add session")
     search_name = mazi_text("Enter name: ")
-    contact = find_contact(search_name)
+    contact = find_contact(contacts, search_name)
     if contact != None:
         # We found a contact
         print("Name: ", contact.name)
@@ -296,8 +303,10 @@ def add_session_to_contact():
     else:
         print("This name was not found.")
 
+    wait_for_key()
 
-def save_contacts(file_name):
+
+def save_contacts(contacts, file_name):
     """
     Saves the contacts to the given file name.
     Contacts are stored in binary format as pickle file.
@@ -309,6 +318,7 @@ def save_contacts(file_name):
             pickle.dump(contacts, out_file)
     except Exception as e:
         print("Save have failed: ", e)
+    wait_for_key()
 
 
 def load_contacts(file_name):
@@ -317,13 +327,14 @@ def load_contacts(file_name):
     Contacts are stored in binary format as pickle file.
     Exceptions will be rised if the load fails.
     """
-    global contacts
+
     print("Load contacts")
     with open(file_name, "rb") as input_file:
         contacts = pickle.load(input_file)
     # Now update the versions of the loaded contacts
     for contact in contacts:
         contact.check_version()
+    return contacts
 
 
 def my_contacts(contacts):
@@ -341,19 +352,6 @@ def my_contacts(contacts):
     wait_for_key()
 
 
-def where_is_my_save():
-    """
-    Locates the file previously saved.
-    Loads the contacts list from the given file
-    if file not found, crates a new contacts list.
-    """
-    try:
-        load_contacts(file_name)
-    except:
-        print("Contacts file not found.")
-        contacts = []
-
-
 menu = """
 Small Contact App
 
@@ -364,34 +362,35 @@ Small Contact App
 5. My Contacts.
 6. Exit Program and Save.
 7. Exit Program without Save.
-8. Load File.
 
 Enter your command: """
 
-file_name = "smacontacts.pickle"
 
-# load_contacts(file_name)
+def main():
+    contacts = load_contacts(DB_FILE)
 
-while True:
-    clear_screen()
-    command = mazi_int_ranged(prompt=menu, min_value=1, max_value=8)
-    if command == 1:
-        new_contact()
-    elif command == 2:
-        display_contact()
-    elif command == 3:
-        edit_contact()
-    elif command == 4:
-        add_session_to_contact()
-    elif command == 5:
-        my_contacts(contacts)
-    elif command == 6:
-        save_contacts(file_name)
-        print("Contacts saved. Thank you and see you soon.")
-        time.sleep(2)
-        break
-    elif command == 7:
-        print("No save has been made. Bye.")
-        break
-    elif command == 8:
-        where_is_my_save()
+    while True:
+        clear_screen()
+        command = mazi_int_ranged(prompt=menu, min_value=1, max_value=7)
+
+        if command == 1:
+            new_contact(contacts)
+        elif command == 2:
+            display_contact(contacts)
+        elif command == 3:
+            edit_contact(contacts)
+        elif command == 4:
+            add_session_to_contact(contacts)
+        elif command == 5:
+            my_contacts(contacts)
+        elif command == 6:
+            save_contacts(contacts, DB_FILE)
+            print("Contacts saved. Thank you and see you soon.")
+            break
+        elif command == 7:
+            print("No save has been made. Bye.")
+            break
+
+
+if __name__ == "__main__":
+    main()
