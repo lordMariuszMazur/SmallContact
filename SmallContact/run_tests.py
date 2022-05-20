@@ -7,15 +7,15 @@ from MAZIbox import *
 
 
 class TestContact(unittest.TestCase):
-    def test_load(self):
+    def test_load_contacts(self):
         file = load_contacts(file_name="smacontacts.pickle")
         self.assertEqual(file, file_name="smacontacts.pickle")
 
     def test_Contact_init(self):
-        test_1 = Contact(name="Mario", address="Sydney", telephone=999)
+        test_1 = Contact(name="Mario", address="Sydney", telephone=555)
         self.assertEqual(test_1.name, "Mario")
         self.assertEqual(test_1.address, "Sydney")
-        self.assertEqual(test_1.telephone, 999)
+        self.assertEqual(test_1.telephone, 555)
 
     def test_Session_init(self):
         test_2 = Session(session_length=2)
@@ -24,12 +24,12 @@ class TestContact(unittest.TestCase):
 
 class TestBox(unittest.TestCase):
     def test_mazi_int(self):
-        prompt = mazi_int(prompt=2)
-        self.assertEqual(prompt, 2)
+        first = mazi_int(prompt=2)
+        self.assertEqual(first, 2)
 
     def test_mazi_text(self):
-        prompt = mazi_text(prompt="Mario")
-        self.assertEqual(prompt, "Mario")
+        second = mazi_text(prompt="mario")
+        self.assertEqual(second, "mario")
 
 
 if __name__ == "__main__":

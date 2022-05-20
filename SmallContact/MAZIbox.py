@@ -103,6 +103,15 @@ def mazi_int_ranged(prompt, min_value, max_value):
     return result
 
 
+def wait_for_key():
+    input("Press 'Enter'to continue...")
+
+
+def clear_screen():
+    """Clear screen"""
+    os.system("clear" if os.name == "posix" else "cls")
+
+
 def introduction():
     print(
         """ Welcome to the MAZIbox functions. Version 1.0.

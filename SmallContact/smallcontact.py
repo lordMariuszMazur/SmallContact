@@ -276,6 +276,8 @@ def edit_contact(contacts):
     else:
         print("This name was not found. Please check the name again.")
 
+    wait_for_key()
+
 
 def add_session_to_contact(contacts):
     """
@@ -298,6 +300,8 @@ def add_session_to_contact(contacts):
     else:
         print("This name was not found.")
 
+    wait_for_key()
+
 
 def save_contacts(contacts, file_name):
     """
@@ -311,6 +315,8 @@ def save_contacts(contacts, file_name):
             pickle.dump(contacts, out_file)
     except Exception as e:
         print("Save have failed: ", e)
+
+    wait_for_key()
 
 
 def load_contacts(file_name):
@@ -368,10 +374,16 @@ Small Contact App
 Enter your command: """
 
 
-def mine_menu():
-    contacts = load_contacts(DEBUG_FILE)
+def main_menu():
+    try:
+        contacts = load_contacts(DEBUG_FILE)
+    except:
+        where_is_my_save()
+
     while True:
         command = mazi_int_ranged(prompt=menu, min_value=1, max_value=7)
+        clear_screen()
+
         if command == 1:
             new_contact(contacts)
         elif command == 2:
@@ -388,9 +400,10 @@ def mine_menu():
             time.sleep(2)
             break
         elif command == 7:
-            print("No save has been made. Bye.")
+            print("No save has been made. Bye bye.")
+            time.sleep(2)
             break
 
 
 if __name__ == "__main__":
-    mine_menu()
+    main_menu()
